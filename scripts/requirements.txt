@@ -1,0 +1,8 @@
+# Dataset collection dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.3
+duckduckgo_search>=6.2.0
+Pillow>=10.3.0
+imagehash>=4.3.1
+numpy>=1.26.0
+tqdm>=4.66.0
