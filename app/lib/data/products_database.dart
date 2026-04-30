@@ -1268,6 +1268,65 @@ const List<Product> kProducts = [
       'ta': 'ஆபத்து: பூச்சிக்கொல்லிகள் உள்ளடக்கியது. உணவு, குழந்தைகள் மற்றும் செல்லப்பிராணிகளிடம் இருந்து விலக்கி வைக்கவும்.',
     },
   ),
+
+  Product(
+    id: 'kohomba_soup',
+    brand: 'Siddhalepa',
+    category: 'Personal Care',
+    price: 'Rs. 80 – 220',
+    madeIn: 'Sri Lanka',
+    weight: '70g / 100g',
+    names: {
+      'en': 'Kohomba Herbal Soap',
+      'si': 'කොහොඹ පාරිශුද්ධ සබන්',
+      'ta': 'கோஹோம்பா மூலிகை சோப்பு',
+    },
+    description: {
+      'en': 'A traditional Sri Lankan herbal soap made with kohomba (neem) extract. Known for its antibacterial and skin-soothing properties.',
+      'si': 'කොහොඹ සාරය සමඟ සාදන ලද සම්ප්‍රදායික ශ්‍රී ලාංකීය ඖෂධීය සබන්. ප්‍රතිබැක්ටීරීය හා සමේ ගුණ සඳහා ප්‍රසිද්ධය.',
+      'ta': 'கோஹோம்பா (வேப்பம்) சாற்றுடன் தயாரிக்கப்பட்ட பாரம்பரிய இலங்கை மூலிகை சோப்பு. நுண்ணுயிர் எதிர்ப்பு மற்றும் தோல் நலன் குணங்களுக்கு பிரபலமானது.',
+    },
+    ingredients: {
+      'en': 'Sodium palmate, sodium palm kernelate, aqua, kohomba (neem) extract, glycerin, fragrance, titanium dioxide.',
+      'si': 'සෝඩියම් පාල්මේට්, සෝඩියම් පාම් කර්නලේට්, ජලය, කොහොඹ සාරය, ග්ලිසරින්, සුවඳ, ටයිටේනියම් ඩයොක්සයිඩ්.',
+      'ta': 'சோடியம் பால்மேட், சோடியம் பாம் கெர்னலேட், தண்ணீர், கோஹோம்பா சாறு, கிளிசரின், வாசனை, டைட்டானியம் டை ஆக்சைட்.',
+    },
+    allergens: {
+      'en': 'For external use only. Avoid contact with eyes. May cause irritation for sensitive skin.',
+      'si': 'බාහිර භාවිතය පමණි. ඇස් සමඟ සම්බන්ධ වීමෙන් වළකින්න.',
+      'ta': 'வெளிப்புற பயன்பாட்டிற்கு மட்டுமே. கண்களில் படாமல் இருக்கவும்.',
+    },
+  ),
+
+  Product(
+    id: 'link_paspanguwa',
+    brand: 'Link Natural',
+    category: 'Healthcare',
+    price: 'Rs. 45 – 120',
+    madeIn: 'Sri Lanka',
+    weight: '23g / 50g',
+    names: {
+      'en': 'Link Paspanguwa',
+      'si': 'ලින්ක් පස්පංගුව',
+      'ta': 'லிங்க் பஸ்பங்குவா',
+    },
+    description: {
+      'en': 'A traditional Ayurvedic herbal remedy for cold and flu relief. Made from authentic quality herbs, washed, dried and coarsely ground for easy preparation. Registered by the Department of Ayurveda.',
+      'si': 'සෙම්ප්‍රතිශ්‍යාව හා උණ සඳහා සම්ප්‍රදායික ආයුර්වේදීය ඖෂධීය ප්‍රතිකාරයකි. ආයුර්වේද දෙපාර්තමේන්තුව විසින් ලියාපදිංචි කර ඇත.',
+      'ta': 'சளி மற்றும் காய்ச்சல் நிவாரணத்திற்கான பாரம்பரிய ஆயுர்வேத மூலிகை மருந்து. ஆயுர்வேத திணைக்களத்தால் பதிவு செய்யப்பட்டது.',
+    },
+    ingredients: {
+      'en': 'Coriander (Koththamalli), dry ginger (Inguru), pepper (Gammiris), long pepper (Thippili), and other traditional herbs.',
+      'si': 'කොත්තමල්ලි, ඉඟුරු, ගම්මිරිස්, තිප්පිලි සහ වෙනත් සම්ප්‍රදායික ඖෂධ පැළෑටි.',
+      'ta': 'கொத்தமல்லி, இஞ்சி, மிளகு, திப்பிலி மற்றும் பிற பாரம்பரிய மூலிகைகள்.',
+    },
+    allergens: {
+      'en': 'Natural herbal product. Consult a physician if symptoms persist. Keep out of reach of children.',
+      'si': 'ස්වාභාවික ඖෂධීය නිෂ්පාදනය. රෝග ලක්ෂණ පවතී නම් වෛද්‍යවරයෙකු හමුවන්න.',
+      'ta': 'இயற்கை மூலிகை தயாரிப்பு. அறிகுறிகள் தொடர்ந்தால் மருத்துவரை அணுகவும்.',
+    },
+  ),
+
 ];
 
 /// Lookup product by its class ID (from the ML model's labels.txt).

@@ -1,13 +1,15 @@
 {
   "classes": [
     "anchor_milk_powder",
-    "astra_margarine"
+    "astra_margarine",
+    "kohomba_soup",
+    "link_paspanguwa"
   ],
-  "nc": 2,
+  "nc": 4,
   "splits": {
-    "train": 53,
-    "val": 14,
-    "test": 9
+    "train": 208,
+    "val": 58,
+    "test": 33
   },
   "per_class": {
     "anchor_milk_powder": {
@@ -19,6 +21,16 @@
       "train": 30,
       "val": 8,
       "test": 5
+    },
+    "kohomba_soup": {
+      "train": 85,
+      "val": 24,
+      "test": 13
+    },
+    "link_paspanguwa": {
+      "train": 70,
+      "val": 20,
+      "test": 11
     }
   }
 }

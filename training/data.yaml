@@ -1,12 +1,12 @@
 # YOLOv8 dataset configuration for Sri Lankan supermarket products
 # Update 'path' to the absolute path of your dataset directory
 
-path: /Users/thiwanka/Documents/Project/MLProductRecognitionMain/dataset
+path: /Users/sami/Documents/product/ML-productRecognition-main/dataset
 train: images/train
 val:   images/val
 test:  images/test
 
-nc: 43
+nc: 45
 
 names:
   - anchor_butter
@@ -24,8 +24,10 @@ names:
   - indomie_noodles
   - kandos_chocolate
   - knorr_seasoning
+  - kohomba_soup
   - larich_chilli_powder
   - lemon_puff
+  - link_paspanguwa
   - lipton_yellow_label
   - maggi_noodles
   - maliban_ginger
