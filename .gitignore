@@ -16,3 +16,13 @@ env/
 
 # ML/training outputs
 training/runs/
+
+# Generated dataset splits (reproducible from raw images + scripts)
+dataset/images/train/
+dataset/images/val/
+dataset/images/test/
+dataset/labels/
+dataset/labels_raw/
+
+# Virtual environments (any name)
+venv*/
