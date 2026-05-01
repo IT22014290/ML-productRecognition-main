@@ -27,10 +27,18 @@ class _CameraScreenState extends State<CameraScreen>
   CameraController? _controller;
   DetectionResult _result =
       const DetectionResult(boxes: [], inferenceTimeMs: 0);
+  DetectionBox? _stableBestDetection;
+  String? _pendingClassId;
+  int _pendingClassFrames = 0;
+  int _noDetectionFrames = 0;
   bool _isProcessing = false;
   bool _initialized  = false;
   String? _error;
   String? _detectionError;
+
+  static const double _minimumStableConfidence = 0.55;
+  static const int _requiredStableFrames = 3;
+  static const int _maxMissingFrames = 2;
 
   @override
   void initState() {
@@ -63,9 +71,11 @@ class _CameraScreenState extends State<CameraScreen>
     _isProcessing = true;
     try {
       final result = await widget.detector.detect(image);
+      final best = _selectStableDetection(result.bestDetection);
       if (mounted) {
         setState(() {
           _result = result;
+          _stableBestDetection = best;
           _detectionError = null;
         });
       }
@@ -74,6 +84,41 @@ class _CameraScreenState extends State<CameraScreen>
     } finally {
       _isProcessing = false;
     }
+  }
+
+  DetectionBox? _selectStableDetection(DetectionBox? best) {
+    if (best == null || best.confidence < _minimumStableConfidence) {
+      _noDetectionFrames++;
+      _pendingClassId = null;
+      _pendingClassFrames = 0;
+
+      if (_noDetectionFrames >= _maxMissingFrames) {
+        _stableBestDetection = null;
+      }
+      return _stableBestDetection;
+    }
+
+    _noDetectionFrames = 0;
+
+    if (_stableBestDetection != null &&
+        best.classId == _stableBestDetection!.classId) {
+      return best;
+    }
+
+    if (_pendingClassId == best.classId) {
+      _pendingClassFrames++;
+    } else {
+      _pendingClassId = best.classId;
+      _pendingClassFrames = 1;
+    }
+
+    if (_pendingClassFrames >= _requiredStableFrames) {
+      _pendingClassId = null;
+      _pendingClassFrames = 0;
+      return best;
+    }
+
+    return _stableBestDetection;
   }
 
   @override
@@ -148,7 +193,7 @@ class _CameraScreenState extends State<CameraScreen>
       for (final p in kProducts) p.id: p.name(langCode),
     };
 
-    final best    = _result.bestDetection;
+    final best    = _stableBestDetection;
     final product = best != null ? findProduct(best.classId) : null;
 
     return Stack(
@@ -253,7 +298,7 @@ class _CameraScreenState extends State<CameraScreen>
 
   Widget _buildIdlePanel() => const Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Icon(Icons.center_focus_strong,
               color: Colors.white38, size: 36),
           SizedBox(height: 8),
@@ -265,11 +310,11 @@ class _CameraScreenState extends State<CameraScreen>
         ],
       );
 
-  Widget _buildUnknownPanel(DetectionBox best) => Column(
+  Widget _buildUnknownPanel(DetectionBox best) => const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Row(children: [
+      children: [
+          Row(children: <Widget>[
             Icon(Icons.help_outline, color: Colors.amber, size: 22),
             SizedBox(width: 8),
             Text('Product not in database',
@@ -278,8 +323,8 @@ class _CameraScreenState extends State<CameraScreen>
                     fontSize: 18,
                     fontWeight: FontWeight.bold)),
           ]),
-          const SizedBox(height: 6),
-          const Text(
+          SizedBox(height: 6),
+          Text(
             'Only Sri Lankan supermarket products are supported.\nTrain the model with more data to improve coverage.',
             style: TextStyle(color: Colors.white70, fontSize: 13),
           ),
