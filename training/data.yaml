@@ -1,56 +1,15 @@
 # YOLOv8 dataset configuration for Sri Lankan supermarket products
 # Update 'path' to the absolute path of your dataset directory
 
-path: /Users/sami/Documents/product/ML-productRecognition-main/dataset
+path: /Users/sami/Documents/product recognition app/ML-productRecognition-main/dataset
 train: images/train
 val:   images/val
 test:  images/test
 
-nc: 45
+nc: 4
 
 names:
-  - anchor_butter
   - anchor_milk_powder
   - astra_margarine
-  - baygon_spray
-  - clogard_toothpaste
-  - dettol_liquid
-  - devonia_coconut_milk
-  - dilmah_tea
-  - edna_toffee
-  - elephant_house_cream_soda
-  - elephant_house_ginger_beer
-  - highland_yogurt
-  - indomie_noodles
-  - kandos_chocolate
-  - knorr_seasoning
   - kohomba_soup
-  - larich_chilli_powder
-  - lemon_puff
   - link_paspanguwa
-  - lipton_yellow_label
-  - maggi_noodles
-  - maliban_ginger
-  - maliban_marie
-  - md_chilli_sauce
-  - md_jam
-  - md_tomato_sauce
-  - milco_milk
-  - milo_tin
-  - munchee_chocolate
-  - munchee_cream_cracker
-  - munchee_marie
-  - nescafe_3in1
-  - nestomalt
-  - nip_biscuit
-  - parachute_coconut_oil
-  - prima_flour
-  - prima_noodles
-  - rajah_curry_powder
-  - richlife_milk
-  - ritzbury_chocolate
-  - samba_rice
-  - sunlight_soap
-  - tiara_wafer
-  - vim_dishwash
-  - wijaya_curry_powder

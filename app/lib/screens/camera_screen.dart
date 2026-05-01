@@ -35,9 +35,10 @@ class _CameraScreenState extends State<CameraScreen>
   bool _initialized  = false;
   String? _error;
   String? _detectionError;
+  DateTime? _lastFrameEnd; // throttle: minimum gap between successive inferences
 
-  static const double _minimumStableConfidence = 0.55;
-  static const int _requiredStableFrames = 3;
+  static const double _minimumStableConfidence = 0.15;  // DEBUG: very low to check if kohomba_soup appears
+  static const int _requiredStableFrames = 2;
   static const int _maxMissingFrames = 2;
 
   @override
@@ -54,7 +55,7 @@ class _CameraScreenState extends State<CameraScreen>
     }
     _controller = CameraController(
       widget.cameras.first,
-      ResolutionPreset.medium,
+      ResolutionPreset.low,   // ~352×288 — much faster YUV→RGB preprocessing vs medium (~720×480)
       enableAudio: false,
     );
     try {
@@ -68,6 +69,13 @@ class _CameraScreenState extends State<CameraScreen>
 
   void _onCameraFrame(CameraImage image) async {
     if (_isProcessing || !widget.detector.isLoaded) return;
+
+    // Limit to ~3 fps regardless of model speed — saves battery and prevents
+    // excessive CPU use when inference is fast after model re-export.
+    final now = DateTime.now();
+    if (_lastFrameEnd != null &&
+        now.difference(_lastFrameEnd!).inMilliseconds < 300) return;
+
     _isProcessing = true;
     try {
       final result = await widget.detector.detect(image);
@@ -82,6 +90,7 @@ class _CameraScreenState extends State<CameraScreen>
     } catch (e) {
       if (mounted) setState(() => _detectionError = e.toString());
     } finally {
+      _lastFrameEnd = DateTime.now();
       _isProcessing = false;
     }
   }

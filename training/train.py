@@ -3,11 +3,14 @@ YOLOv8 training script for Sri Lankan supermarket product recognition.
 
 Usage:
     pip install -r requirements.txt
-    python train.py           # fresh start (or auto-resumes if interrupted)
-    python train.py --resume  # force-resume from last.pt
-    python train.py --fresh   # ignore any existing checkpoint and restart
+    python train.py                  # 320×320 — recommended for mobile (fast inference)
+    python train.py --imgsz 640      # 640×640 — higher accuracy, ~4× slower on device
+    python train.py --resume         # force-resume from last.pt
+    python train.py --fresh          # ignore any existing checkpoint and restart
 
-After training, run export_tflite.py to convert to TFLite.
+After training, run:
+    python export_tflite.py          # FP32 (safe default)
+    python export_tflite.py --int8   # INT8 quantized (~4× faster CPU/NNAPI, ~2% mAP loss)
 """
 
 import argparse
@@ -22,6 +25,8 @@ def parse_args():
                    help='Resume from last.pt if available')
     p.add_argument('--fresh',  action='store_true',
                    help='Ignore any existing checkpoint and train from scratch')
+    p.add_argument('--imgsz', type=int, default=320,
+                   help='Input image size (default: 320 for fast mobile inference; use 640 for higher accuracy)')
     return p.parse_args()
 
 args = parse_args()
@@ -31,11 +36,11 @@ DATA_YAML    = Path(__file__).parent / 'data.yaml'
 BASE_MODEL   = 'yolov8n.pt'   # nano: fastest inference on mobile; swap to yolov8s.pt for better accuracy
 EPOCHS       = 100
 BATCH        = 16
-IMAGE_SIZE   = 640
+IMAGE_SIZE   = args.imgsz
 PROJECT      = 'runs'
 RUN_NAME     = 'sl_products'
 
-LAST_PT  = Path(PROJECT) / 'detect' / RUN_NAME / 'weights' / 'last.pt'
+LAST_PT  = Path(PROJECT) / 'detect' / PROJECT / RUN_NAME / 'weights' / 'last.pt'
 
 # Auto-select device: MPS (Apple Silicon), CUDA (Nvidia GPU), or CPU
 import torch
